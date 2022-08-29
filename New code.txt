@@ -1,0 +1,23 @@
+const discord = require('discord.js'); // Import discord.js
+
+const client = new discord.Client(); // Initialize new discord.js client
+
+const messages = [];
+
+client.on('message', (msg) => {
+  if (!msg.content.startsWith('+')) return; // If the message doesn't start with the prefix return
+
+  const args = msg.content.slice(1).split(' '); // Split all spaces so you can get the command out of the message
+  const cmd = args.shift().toLowerCase(); // Get the commands name
+
+  switch (cmd) {
+    case 'add':
+      messages.push(args.join(' ')); // Add the message's content to the messages array
+      break;
+    case 'get':
+      msg.channel.send(messages.map((message) => `${message}\n`)); /* Get all the stored messages and map them + send them */
+      break;
+  }
+});
+
+client.login(/* Your token */); // Login discord.js
